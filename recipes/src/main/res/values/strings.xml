@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Recipes</string>
+    <string name="home">Home</string>
+    <string name="Orders">Orders</string>
+    <string name="chat">chat</string>
+    <string name="profile">Profile</string>
+</resources>
