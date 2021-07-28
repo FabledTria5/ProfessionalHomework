@@ -7,6 +7,7 @@
     tools:context=".ui.activities.main.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -23,6 +24,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_10sdp"
@@ -83,6 +85,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tieSearchView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="@color/white"
@@ -131,6 +134,7 @@
             app:trackColor="@color/SteelBlue" />
 
         <TextView
+            android:id="@+id/tvErrorMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/error_message"
@@ -157,6 +161,7 @@
             tools:listitem="@layout/item_meaning" />
 
         <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupResult"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="invisible"
