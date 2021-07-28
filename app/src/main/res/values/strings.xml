@@ -6,9 +6,7 @@
     <string name="german">German</string>
     <string name="french">French</string>
     <string name="italian">Italian</string>
-    <string name="enter_word">Enter word…</string>
     <string name="word_audio">Word audio</string>
-    <string name="options_button">Options button</string>
     <string name="easy_words">Easy Words</string>
     <string name="error_message">Sorry, we could not find your word</string>
 </resources>

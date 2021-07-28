@@ -24,10 +24,10 @@ class SplashActivity : BaseDaggerActivity(), SplashView {
         super.onCreate(savedInstanceState)
         binding =
             ActivitySplashScreenBinding.inflate(layoutInflater).also { setContentView(it.root) }
-        splashPresenter.onCreate()
+        setupAnimation()
     }
 
-    override fun setupAnimation() {
+    private fun setupAnimation() {
         binding.lottieAnimationView.addAnimatorListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator?) = Unit
 
