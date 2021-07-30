@@ -1,5 +1,6 @@
 package com.example.professionalhomework.ui.activities.main
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -56,6 +57,7 @@ class MainActivity : BaseDaggerActivity(), MainView {
 
     override fun disableAudio() = binding.btnPlay.disable()
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun updateWord(word: Word) {
         binding.tvWord.text = word.word
         meaningAdapter.notifyDataSetChanged()
