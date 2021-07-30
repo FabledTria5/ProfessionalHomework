@@ -1,19 +1,22 @@
 package com.example.professionalhomework.ui.adapters.rv.word
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.professionalhomework.data.db.entities.Meaning
 import com.example.professionalhomework.databinding.ItemMeaningBinding
 
-class MeaningAdapter(private val presenter: MeaningsPresenter) :
-    RecyclerView.Adapter<MeaningAdapter.MeaningViewHolderImpl>() {
+class MeaningAdapter : RecyclerView.Adapter<MeaningAdapter.MeaningViewHolderImpl>() {
+
+    private val itemList = mutableListOf<Meaning>()
 
     inner class MeaningViewHolderImpl(private val binding: ItemMeaningBinding) :
-        RecyclerView.ViewHolder(binding.root), MeaningViewHolder {
+        RecyclerView.ViewHolder(binding.root) {
 
-        override fun bindMeaning(partOfSpeech: String, meaning: String) {
-            binding.tvPartOfSpeech.text = partOfSpeech
-            binding.tvMeaning.text = meaning
+        fun bindMeaning(meaning: Meaning) {
+            binding.tvPartOfSpeech.text = meaning.partOfSpeech
+            binding.tvMeaning.text = meaning.definition
         }
 
     }
@@ -23,8 +26,15 @@ class MeaningAdapter(private val presenter: MeaningsPresenter) :
     )
 
     override fun onBindViewHolder(holder: MeaningViewHolderImpl, position: Int) =
-        presenter.bindView(holder, position)
+        holder.bindMeaning(itemList[position])
 
-    override fun getItemCount() = presenter.getCount()
+    override fun getItemCount() = itemList.count()
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateList(newItems: List<Meaning>) {
+        itemList.clear()
+        itemList.addAll(newItems)
+        notifyDataSetChanged()
+    }
 
 }

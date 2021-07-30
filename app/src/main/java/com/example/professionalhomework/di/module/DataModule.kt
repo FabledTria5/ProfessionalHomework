@@ -2,7 +2,10 @@ package com.example.professionalhomework.di.module
 
 import android.content.Context
 import androidx.room.Room
-import com.example.professionalhomework.data.datasource.*
+import com.example.professionalhomework.data.datasource.DataSourceLocal
+import com.example.professionalhomework.data.datasource.DataSourceRemote
+import com.example.professionalhomework.data.datasource.LocalDataSource
+import com.example.professionalhomework.data.datasource.RemoteDataSource
 import com.example.professionalhomework.data.db.DictionaryDatabase
 import com.example.professionalhomework.data.model.AppState
 import com.example.professionalhomework.data.network.api.ApiService
@@ -10,7 +13,6 @@ import com.example.professionalhomework.data.repository.DictionaryRepository
 import com.example.professionalhomework.data.repository.DictionaryRepositoryImpl
 import com.example.professionalhomework.ui.activities.main.MainInteractor
 import com.example.professionalhomework.ui.interactor.Interactor
-import com.example.professionalhomework.rx.Schedulers
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -44,12 +46,10 @@ class DataModule {
         localDataSource: LocalDataSource
     ): DictionaryRepository = DictionaryRepositoryImpl(remoteDataSource, localDataSource)
 
-    @Singleton
     @Provides
-    fun provideMainInteractor(
+    fun provideInteractor(
         remoteRepository: DictionaryRepository,
         localRepository: DictionaryRepository,
-        schedulers: Schedulers
-    ): Interactor<AppState> = MainInteractor(remoteRepository, localRepository, schedulers)
+    ): Interactor<AppState> = MainInteractor(remoteRepository, localRepository)
 
 }

@@ -1,15 +1,16 @@
 package com.example.professionalhomework.di.component
 
 import android.content.Context
-import com.example.professionalhomework.MainApplication
+import com.example.professionalhomework.DictionaryApplication
 import com.example.professionalhomework.di.module.DataModule
 import com.example.professionalhomework.di.module.NetworkModule
 import com.example.professionalhomework.di.module.UiModule
+import com.example.professionalhomework.di.module.viewmodel.ViewModelModule
 import com.example.professionalhomework.rx.Schedulers
+import com.example.professionalhomework.ui.activities.main.MainActivity
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
-import dagger.android.AndroidInjector
 import javax.inject.Singleton
 
 @Singleton
@@ -17,23 +18,27 @@ import javax.inject.Singleton
     modules = [
         AndroidInjectionModule::class,
         UiModule::class,
+        ViewModelModule::class,
         NetworkModule::class,
         DataModule::class
     ]
 )
-interface MainComponent : AndroidInjector<MainApplication> {
+interface AppComponent {
 
     @Component.Builder
     interface Builder {
 
         @BindsInstance
-        fun withContext(context: Context) : Builder
+        fun withContext(context: Context): Builder
 
         @BindsInstance
-        fun withSchedulers(schedulers: Schedulers) : Builder
+        fun withSchedulers(schedulers: Schedulers): Builder
 
-        fun build(): MainComponent
-
+        fun build(): AppComponent
     }
+
+    fun inject(application: DictionaryApplication)
+
+    fun inject(activity: MainActivity)
 
 }

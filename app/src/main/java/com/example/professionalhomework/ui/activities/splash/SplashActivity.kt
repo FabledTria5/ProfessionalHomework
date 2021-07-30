@@ -3,22 +3,13 @@ package com.example.professionalhomework.ui.activities.splash
 import android.animation.Animator
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.professionalhomework.databinding.ActivitySplashScreenBinding
 import com.example.professionalhomework.ui.activities.main.MainActivity
-import com.example.professionalhomework.ui.base.di.BaseDaggerActivity
-import moxy.ktx.moxyPresenter
-import javax.inject.Inject
 
-class SplashActivity : BaseDaggerActivity(), SplashView {
-
-    @Inject
-    lateinit var splashPresenterFactory: SplashPresenterFactory
+class SplashActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashScreenBinding
-
-    private val splashPresenter by moxyPresenter {
-        splashPresenterFactory.create()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,11 +26,11 @@ class SplashActivity : BaseDaggerActivity(), SplashView {
 
             override fun onAnimationCancel(animation: Animator?) = Unit
 
-            override fun onAnimationRepeat(animation: Animator?) = splashPresenter.onAnimationEnd()
+            override fun onAnimationRepeat(animation: Animator?) = startMainActivity()
         })
     }
 
-    override fun startMainActivity() {
+    fun startMainActivity() {
         binding.lottieAnimationView.pauseAnimation()
         startActivity(Intent(this, MainActivity::class.java))
         finish()
