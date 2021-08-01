@@ -4,7 +4,6 @@ import android.content.Context
 import com.example.professionalhomework.DictionaryApplication
 import com.example.professionalhomework.di.module.DataModule
 import com.example.professionalhomework.di.module.NetworkModule
-import com.example.professionalhomework.di.module.UiModule
 import com.example.professionalhomework.di.module.viewmodel.ViewModelModule
 import com.example.professionalhomework.rx.Schedulers
 import com.example.professionalhomework.ui.activities.main.MainActivity
@@ -17,7 +16,6 @@ import javax.inject.Singleton
 @Component(
     modules = [
         AndroidInjectionModule::class,
-        UiModule::class,
         ViewModelModule::class,
         NetworkModule::class,
         DataModule::class
