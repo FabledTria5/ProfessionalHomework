@@ -1,8 +1,6 @@
 package com.example.professionalhomework.utils
 
-import android.app.Activity
 import android.view.View
-import android.widget.Toast
 
 object Extensions {
 

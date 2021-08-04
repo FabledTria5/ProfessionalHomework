@@ -1,3 +1,5 @@
+@file:Suppress("EnumEntryName")
+
 package com.example.professionalhomework.utils
 
 enum class Languages {

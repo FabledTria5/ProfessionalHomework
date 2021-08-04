@@ -31,6 +31,14 @@ class MainActivity : BaseDaggerActivity(), MainView {
         mainPresenterFactory.create()
     }
 
+    private val tabListener = object : TabLayout.OnTabSelectedListener {
+        override fun onTabSelected(tab: TabLayout.Tab?) {
+            tab?.position?.let(mainPresenter::onLanguageSelected)
+        }
+        override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
+        override fun onTabReselected(tab: TabLayout.Tab?) = Unit
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater).also { setContentView(it.root) }
@@ -110,13 +118,6 @@ class MainActivity : BaseDaggerActivity(), MainView {
             mainPresenter.onPlayClicked()
         }
 
-        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                tab?.position?.let(mainPresenter::onLanguageSelected)
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
-            override fun onTabReselected(tab: TabLayout.Tab?) = Unit
-        })
+        binding.tabLayout.addOnTabSelectedListener(tabListener)
     }
 }
