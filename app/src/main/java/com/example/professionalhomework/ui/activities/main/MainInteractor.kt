@@ -12,7 +12,6 @@ import javax.inject.Inject
 class MainInteractor @Inject constructor(
     private val remoteRepository: DictionaryRepository,
     private val localRepository: DictionaryRepository,
-    private val schedulers: Schedulers
 ) : Interactor<AppState> {
 
     override fun getWord(word: String, languageCode: String): Single<out AppState> =
@@ -30,5 +29,5 @@ class MainInteractor @Inject constructor(
                 } else {
                     Single.error(error)
                 }
-            }.subscribeOn(schedulers.background())
+            }
 }
