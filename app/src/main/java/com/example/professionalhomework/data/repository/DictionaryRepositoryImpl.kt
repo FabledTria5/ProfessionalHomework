@@ -12,11 +12,11 @@ class DictionaryRepositoryImpl @Inject constructor(
 ) :
     DictionaryRepository {
 
-    override fun getWord(languageCode: String, query: String) =
+    override suspend fun getWord(languageCode: String, query: String) =
         remoteDatasource.getData(languageCode, query)
 
-    override fun fetchWord(word: Word, meanings: List<Meaning>) =
+    override suspend fun fetchWord(word: Word, meanings: List<Meaning>) =
         localDataSource.fetchData(word, meanings)
 
-    override fun getWord(word: String) = localDataSource.getData(word)
+    override suspend fun getWord(word: String) = localDataSource.getData(word)
 }

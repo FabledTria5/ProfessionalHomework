@@ -8,9 +8,9 @@ import retrofit2.http.Path
 interface ApiService {
 
     @GET(value = "entries/{language_code}/{word}")
-    fun getWord(
+    suspend fun getWord(
         @Path(value = "language_code") languageCode: String,
         @Path(value = "word") word: String
-    ) : Single<Response>
+    ) : Response
 
 }

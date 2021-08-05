@@ -5,7 +5,6 @@ import com.example.professionalhomework.DictionaryApplication
 import com.example.professionalhomework.di.module.DataModule
 import com.example.professionalhomework.di.module.NetworkModule
 import com.example.professionalhomework.di.module.viewmodel.ViewModelModule
-import com.example.professionalhomework.rx.Schedulers
 import com.example.professionalhomework.ui.activities.main.MainActivity
 import dagger.BindsInstance
 import dagger.Component
@@ -28,9 +27,6 @@ interface AppComponent {
 
         @BindsInstance
         fun withContext(context: Context): Builder
-
-        @BindsInstance
-        fun withSchedulers(schedulers: Schedulers): Builder
 
         fun build(): AppComponent
     }

@@ -7,7 +7,7 @@ import com.example.professionalhomework.data.network.model.Response
 import io.reactivex.rxjava3.core.Single
 
 interface DictionaryRepository {
-    fun getWord(languageCode: String, query: String): Single<Response>
-    fun getWord(word: String): Single<WordWithMeanings>
-    fun fetchWord(word: Word, meanings: List<Meaning>): Single<WordWithMeanings>
+    suspend fun getWord(languageCode: String, query: String): Response
+    suspend fun getWord(word: String): WordWithMeanings?
+    suspend fun fetchWord(word: Word, meanings: List<Meaning>): WordWithMeanings
 }

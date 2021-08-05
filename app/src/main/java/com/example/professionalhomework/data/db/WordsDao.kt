@@ -11,19 +11,19 @@ import io.reactivex.rxjava3.core.Single
 interface WordsDao {
 
     @Insert
-    fun insertWord(word: Word) : Completable
+    suspend fun insertWord(word: Word)
 
     @Insert
-    fun insertMeanings(meanings: List<Meaning>) : Completable
+    suspend fun insertMeanings(meanings: List<Meaning>)
 
     @Transaction
     @Query(value = "SELECT * FROM table_words WHERE word = :word")
-    fun getWordWithMeanings(word: String): Single<WordWithMeanings>
+    suspend fun getWordWithMeanings(word: String): WordWithMeanings
 
     @Query(value = "SELECT * FROM table_words WHERE word = :word")
-    fun getWords(word: String): Single<Word>
+    suspend fun getWords(word: String): Word
 
     @Query(value = "SELECT * FROM table_words_meanings WHERE parent_word = :word")
-    fun getMeanings(word: String): Single<Meaning>
+    suspend fun getMeanings(word: String): Meaning
 
 }

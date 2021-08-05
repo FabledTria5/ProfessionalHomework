@@ -33,7 +33,6 @@ class NetworkModule {
     @Provides
     fun provideRetrofit(OkHttpClient: OkHttpClient, baseUrl: String): Retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
         .baseUrl(baseUrl)
         .client(OkHttpClient)
         .build()
