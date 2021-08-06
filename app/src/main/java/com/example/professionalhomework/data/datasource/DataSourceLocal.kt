@@ -6,7 +6,7 @@ import com.example.professionalhomework.data.db.entities.Word
 import com.example.professionalhomework.data.db.relations.WordWithMeanings
 import javax.inject.Inject
 
-class DataSourceLocal @Inject constructor(
+class DataSourceLocal(
     db: DictionaryDatabase
 ) : LocalDataSource {
 
@@ -18,7 +18,6 @@ class DataSourceLocal @Inject constructor(
         return wordsDao.getWordWithMeanings(word = word.word)
     }
 
-    override suspend fun getData(word: String): WordWithMeanings =
-        wordsDao.getWordWithMeanings(word)
+    override suspend fun getData(word: String) = wordsDao.getWordWithMeanings(word)
 
 }

@@ -3,10 +3,10 @@ package com.example.professionalhomework.ui.activities.main
 import com.example.professionalhomework.data.model.AppState
 import com.example.professionalhomework.data.repository.DataConverter
 import com.example.professionalhomework.data.repository.DictionaryRepository
+import com.example.professionalhomework.data.repository.DictionaryRepositoryImpl
 import com.example.professionalhomework.ui.interactor.Interactor
-import javax.inject.Inject
 
-class MainInteractor @Inject constructor(
+class MainInteractor(
     private val remoteRepository: DictionaryRepository,
     private val localRepository: DictionaryRepository,
 ) : Interactor<AppState> {

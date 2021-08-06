@@ -15,12 +15,10 @@ import com.example.professionalhomework.utils.Extensions.enable
 import com.example.professionalhomework.utils.Extensions.hide
 import com.example.professionalhomework.utils.Extensions.show
 import com.google.android.material.tabs.TabLayout
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import javax.inject.Inject
 
 class MainActivity : BaseActivity<AppState, MainInteractor>() {
-
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var meaningAdapter: MeaningAdapter
@@ -28,13 +26,11 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
     private var mediaPlayer: MediaPlayer? = null
     private var wordAudio: String? = null
 
-    override val model: MainViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-    }
+    val viewModel: MainViewModel by viewModel()
 
     private val tabListener = object : TabLayout.OnTabSelectedListener {
         override fun onTabSelected(tab: TabLayout.Tab?) {
-            tab?.position?.let(model::onLanguageChanged)
+            tab?.position?.let(viewModel::onLanguageChanged)
         }
 
         override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
@@ -42,8 +38,6 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        DictionaryApplication.component.inject(this)
-
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater).also { setContentView(it.root) }
 
@@ -66,7 +60,7 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
     }
 
     private fun initialize() {
-        model.subscribe().observe(this, ::renderData)
+        viewModel.subscribe().observe(this, ::renderData)
 
         binding.rvMeanings.apply {
             meaningAdapter = MeaningAdapter()
@@ -76,7 +70,7 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
 
     private fun setupListeners() {
         binding.tilSearchLayout.setEndIconOnClickListener {
-            model.getData(binding.tieSearchView.text.toString())
+            viewModel.getData(binding.tieSearchView.text.toString())
         }
 
         binding.btnPlay.setOnClickListener { playWord() }

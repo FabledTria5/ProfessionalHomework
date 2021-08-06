@@ -7,18 +7,15 @@ import com.example.professionalhomework.ui.interactor.Interactor
 import com.example.professionalhomework.utils.Languages
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class MainViewModel @Inject constructor(
-    private val interactor: Interactor<AppState>,
-) : BaseViewModel<AppState>() {
+class MainViewModel(private val interactor: Interactor<AppState>) : BaseViewModel<AppState>() {
 
     private var languageCode: String = Languages.en_US.name
 
     override fun getData(word: String) {
         liveDataForViewToObserve.value = AppState.Loading(null)
 
-        viewModelScope.launch (Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
             liveDataForViewToObserve.postValue(
                 interactor.getWord(
                     word = word,

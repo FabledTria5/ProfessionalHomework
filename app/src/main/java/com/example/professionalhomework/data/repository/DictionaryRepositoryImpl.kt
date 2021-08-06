@@ -4,9 +4,9 @@ import com.example.professionalhomework.data.datasource.LocalDataSource
 import com.example.professionalhomework.data.datasource.RemoteDataSource
 import com.example.professionalhomework.data.db.entities.Meaning
 import com.example.professionalhomework.data.db.entities.Word
-import javax.inject.Inject
+import com.example.professionalhomework.data.db.relations.WordWithMeanings
 
-class DictionaryRepositoryImpl @Inject constructor(
+class DictionaryRepositoryImpl(
     private val remoteDatasource: RemoteDataSource,
     private val localDataSource: LocalDataSource
 ) :
