@@ -1,4 +1,4 @@
-package com.example.professionalhomework.di.module
+package com.example.professionalhomework.di
 
 import android.content.Context
 import androidx.room.Room
@@ -8,13 +8,15 @@ import com.example.professionalhomework.data.datasource.DataSourceRemote
 import com.example.professionalhomework.data.datasource.LocalDataSource
 import com.example.professionalhomework.data.datasource.RemoteDataSource
 import com.example.professionalhomework.data.db.DictionaryDatabase
-import com.example.professionalhomework.data.model.AppState
 import com.example.professionalhomework.data.network.api.ApiService
-import com.example.professionalhomework.data.repository.DictionaryRepository
-import com.example.professionalhomework.data.repository.DictionaryRepositoryImpl
-import com.example.professionalhomework.ui.activities.main.MainInteractor
-import com.example.professionalhomework.ui.activities.main.MainViewModel
-import com.example.professionalhomework.ui.interactor.Interactor
+import com.example.professionalhomework.data.repository.LocalRepository
+import com.example.professionalhomework.data.repository.LocalRepositoryImpl
+import com.example.professionalhomework.data.repository.RemoteRepository
+import com.example.professionalhomework.data.repository.RemoteRepositoryImpl
+import com.example.professionalhomework.ui.fragments.history.HistoryInteractor
+import com.example.professionalhomework.ui.fragments.history.HistoryViewModel
+import com.example.professionalhomework.ui.fragments.home.HomeInteractor
+import com.example.professionalhomework.ui.fragments.home.HomeViewModel
 import com.example.professionalhomework.utils.Constants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -39,22 +41,28 @@ val domainModule = module {
     single<RemoteDataSource> { DataSourceRemote(apiService = get()) }
     single<LocalDataSource> { DataSourceLocal(db = get()) }
 
-    single<DictionaryRepository> {
-        DictionaryRepositoryImpl(
-            remoteDatasource = get(),
-            localDataSource = get()
-        )
+    single<LocalRepository> {
+        LocalRepositoryImpl(localDataSource = get())
+    }
+
+    single<RemoteRepository> {
+        RemoteRepositoryImpl(remoteDataSource = get())
     }
 }
 
 val presentationModule = module {
-    single<Interactor<AppState>> {
-        MainInteractor(
+    single(named("HomeInteractor")) {
+        HomeInteractor(
             remoteRepository = get(),
             localRepository = get()
         )
     }
-    viewModel { MainViewModel(interactor = get()) }
+    single(named("HistoryInteractor")) {
+        HistoryInteractor(localRepository = get())
+    }
+
+    viewModel { HomeViewModel(interactor = get(qualifier = named("HomeInteractor"))) }
+    viewModel { HistoryViewModel(historyInteractor = get(qualifier = named("HistoryInteractor"))) }
 }
 
 fun provideDictionaryDatabase(context: Context): DictionaryDatabase = Room

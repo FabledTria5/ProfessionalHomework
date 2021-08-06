@@ -11,4 +11,6 @@
     <string name="options_button">Options button</string>
     <string name="easy_words">Easy Words</string>
     <string name="error_message">Sorry, we could not find your word</string>
+    <string name="history">History</string>
+    <string name="history_button">History Button</string>
 </resources>

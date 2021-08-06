@@ -1,18 +1,19 @@
-package com.example.professionalhomework.ui.activities.main
+package com.example.professionalhomework.ui.fragments.home
 
 import androidx.lifecycle.viewModelScope
 import com.example.professionalhomework.data.model.AppState
 import com.example.professionalhomework.ui.base.viewmodel.BaseViewModel
-import com.example.professionalhomework.ui.interactor.Interactor
 import com.example.professionalhomework.utils.Languages
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val interactor: Interactor<AppState>) : BaseViewModel<AppState>() {
+class HomeViewModel(
+    private val interactor: HomeInteractor
+) : BaseViewModel<AppState>() {
 
     private var languageCode: String = Languages.en_US.name
 
-    override fun getData(word: String) {
+    fun getData(word: String) {
         liveDataForViewToObserve.value = AppState.Loading(null)
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -24,8 +25,6 @@ class MainViewModel(private val interactor: Interactor<AppState>) : BaseViewMode
             )
         }
     }
-
-    fun subscribe() = liveDataForViewToObserve
 
     fun onLanguageChanged(languagePosition: Int) {
         languageCode = Languages.values()[languagePosition].name

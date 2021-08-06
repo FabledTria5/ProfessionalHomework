@@ -26,4 +26,7 @@ interface WordsDao {
     @Query(value = "SELECT * FROM table_words_meanings WHERE parent_word = :word")
     suspend fun getMeanings(word: String): Meaning
 
+    @Query(value = "SELECT * FROM table_words")
+    suspend fun getAllWords(): List<WordWithMeanings>
+
 }

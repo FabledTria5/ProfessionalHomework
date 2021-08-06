@@ -8,5 +8,5 @@ abstract class BaseViewModel<T : AppState>(
     protected val liveDataForViewToObserve: MutableLiveData<T> = MutableLiveData(),
 ) : ViewModel() {
 
-    abstract fun getData(word: String)
+    fun subscribe() = liveDataForViewToObserve
 }

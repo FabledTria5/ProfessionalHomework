@@ -1,10 +1,10 @@
 package com.example.professionalhomework
 
 import android.app.Application
-import com.example.professionalhomework.di.module.localDataModule
-import com.example.professionalhomework.di.module.domainModule
-import com.example.professionalhomework.di.module.networkModule
-import com.example.professionalhomework.di.module.presentationModule
+import com.example.professionalhomework.di.localDataModule
+import com.example.professionalhomework.di.domainModule
+import com.example.professionalhomework.di.networkModule
+import com.example.professionalhomework.di.presentationModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber

@@ -1,4 +1,4 @@
-package com.example.professionalhomework.ui.adapters.rv.word
+package com.example.professionalhomework.ui.adapters.rv
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

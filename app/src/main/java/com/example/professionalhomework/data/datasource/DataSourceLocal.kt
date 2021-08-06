@@ -18,6 +18,8 @@ class DataSourceLocal(
         return wordsDao.getWordWithMeanings(word = word.word)
     }
 
+    override suspend fun getAllWords(): List<WordWithMeanings> = wordsDao.getAllWords()
+
     override suspend fun getData(word: String) = wordsDao.getWordWithMeanings(word)
 
 }

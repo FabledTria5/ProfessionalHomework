@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class Word(
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "word")
-    var word: String,
+    val word: String,
     @ColumnInfo(name = "pronunciation")
-    var pronunciation: String?,
+    val pronunciation: String?,
 )

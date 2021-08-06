@@ -23,6 +23,7 @@
         android:layout_marginTop="@dimen/_5sdp"
         android:paddingHorizontal="@dimen/_15sdp"
         android:textColor="@color/black"
+        android:textIsSelectable="true"
         android:textSize="@dimen/_13ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
