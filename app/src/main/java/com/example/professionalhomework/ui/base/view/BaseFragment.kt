@@ -7,4 +7,10 @@ abstract class BaseFragment<T : AppState> : Fragment() {
 
     abstract fun renderData(dataModel: T)
 
+    abstract fun showLoading()
+
+    abstract fun hideLoading()
+
+    abstract fun showError()
+
 }

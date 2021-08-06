@@ -67,8 +67,33 @@ class HomeFragment : BaseFragment<AppState>() {
             is AppState.Error -> showError()
             is AppState.Loading -> showLoading()
             is AppState.Success -> setResult(dataModel)
+            else -> Unit
         }
     }
+
+    override fun showError() {
+        binding.btnPlay.disable()
+        binding.progressIndicator.hide()
+        binding.tvErrorMessage.show()
+    }
+
+    override fun showLoading() {
+        hideKeyboard()
+        binding.tvErrorMessage.hide()
+        binding.groupResult.hide()
+        binding.progressIndicator.show()
+    }
+
+    override fun hideLoading() {
+        binding.btnPlay.enable()
+        binding.progressIndicator.hide()
+        binding.groupResult.show()
+    }
+
+    private fun hideKeyboard() =
+        (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).also {
+            it.hideSoftInputFromWindow(view?.windowToken, 0)
+        }
 
     private fun initialize() {
         viewModel.subscribe().observe(viewLifecycleOwner, ::renderData)
@@ -115,29 +140,5 @@ class HomeFragment : BaseFragment<AppState>() {
             setOnPreparedListener { player -> player.start() }
             prepareAsync()
         }
-    }
-
-    private fun showError() {
-        binding.btnPlay.disable()
-        binding.progressIndicator.hide()
-        binding.tvErrorMessage.show()
-    }
-
-    private fun showLoading() {
-        hideKeyboard()
-        binding.tvErrorMessage.hide()
-        binding.groupResult.hide()
-        binding.progressIndicator.show()
-    }
-
-    private fun hideKeyboard() =
-        (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).also {
-            it.hideSoftInputFromWindow(view?.windowToken, 0)
-        }
-
-    private fun hideLoading() {
-        binding.btnPlay.enable()
-        binding.progressIndicator.hide()
-        binding.groupResult.show()
     }
 }

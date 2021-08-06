@@ -10,14 +10,14 @@
         android:label="HomeFragment" >
         <action
             android:id="@+id/openHostoryFragment"
-            app:destination="@id/historyFragment" />
+            app:destination="@id/historyFragment"
+            app:enterAnim="@anim/enter_from_end"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_enter_anim"
+            app:popExitAnim="@anim/exit_to_end" />
     </fragment>
     <fragment
         android:id="@+id/historyFragment"
         android:name="com.example.professionalhomework.ui.fragments.history.HistoryFragment"
-        android:label="HistoryFragment" >
-        <action
-            android:id="@+id/openHomeFragment"
-            app:popUpTo="@id/homeFragment" />
-    </fragment>
+        android:label="HistoryFragment" />
 </navigation>

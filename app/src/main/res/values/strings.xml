@@ -13,4 +13,5 @@
     <string name="error_message">Sorry, we could not find your word</string>
     <string name="history">History</string>
     <string name="history_button">History Button</string>
+    <string name="no_words_message">You do not have any words yet</string>
 </resources>

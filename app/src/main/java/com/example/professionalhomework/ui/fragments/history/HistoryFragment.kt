@@ -9,6 +9,7 @@ import com.example.professionalhomework.data.model.AppState
 import com.example.professionalhomework.databinding.FragmentHistoryBinding
 import com.example.professionalhomework.ui.adapters.rv.HistoryAdapter
 import com.example.professionalhomework.ui.base.view.BaseFragment
+import com.example.professionalhomework.utils.Extensions.show
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HistoryFragment : BaseFragment<AppState>() {
@@ -53,16 +54,27 @@ class HistoryFragment : BaseFragment<AppState>() {
 
     override fun renderData(dataModel: AppState) {
         when (dataModel) {
-            is AppState.Error -> TODO()
-            is AppState.Loading -> TODO()
+            is AppState.Error -> showError()
+            is AppState.Loading -> showLoading()
             is AppState.ListSuccess -> setResult(dataModel)
-            else -> TODO()
+            else -> Unit
         }
+    }
+
+    override fun showLoading() = binding.progressIndicator.show()
+
+    override fun hideLoading() = binding.progressIndicator.hide()
+
+    override fun showError() {
+        binding.tvErrorMessage.show()
+        hideLoading()
     }
 
     private fun setResult(dataModel: AppState.ListSuccess) {
         binding.rvHistory.apply {
             adapter = HistoryAdapter(dataModel.data, onAudioClickListener)
+            show()
         }
+        hideLoading()
     }
 }

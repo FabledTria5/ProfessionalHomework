@@ -10,6 +10,7 @@ class HistoryViewModel(private val historyInteractor: HistoryInteractor) :
     BaseViewModel<AppState>() {
 
     fun getData() {
+        liveDataForViewToObserve.value = AppState.Loading(null)
         viewModelScope.launch(Dispatchers.IO) {
             liveDataForViewToObserve.postValue(historyInteractor.getAllWords())
         }
