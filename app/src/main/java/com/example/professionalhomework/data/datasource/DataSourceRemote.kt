@@ -1,12 +1,11 @@
 package com.example.professionalhomework.data.datasource
 
-import com.example.professionalhomework.data.network.api.ApiService
-import javax.inject.Inject
+import com.example.professionalhomework.data.network.api.DictionaryApi
 
 class DataSourceRemote(
-    private val apiService: ApiService
+    private val dictionaryApi: DictionaryApi,
 ) : RemoteDataSource {
 
-    override suspend fun getData(languageCode: String, query: String) =
-        apiService.getWord(languageCode, query)
+    override suspend fun getData(query: String) =
+        dictionaryApi.searchWord(query)
 }

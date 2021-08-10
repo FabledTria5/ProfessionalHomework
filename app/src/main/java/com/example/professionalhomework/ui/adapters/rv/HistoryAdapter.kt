@@ -4,30 +4,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.professionalhomework.R
-import com.example.professionalhomework.data.db.relations.WordWithMeanings
+import com.example.professionalhomework.data.db.WordWithSynonyms
 import com.example.professionalhomework.databinding.ItemHistoryBinding
-import com.example.professionalhomework.ui.fragments.history.OnAudioClickListener
 import com.example.professionalhomework.utils.Extensions.enable
 
 class HistoryAdapter(
-    private val items: List<WordWithMeanings>,
-    private val onAudioClickListener: OnAudioClickListener
+    private val items: List<WordWithSynonyms>,
 ) :
     RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
 
     inner class HistoryViewHolder(private val binding: ItemHistoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: WordWithMeanings) {
+        fun bind(item: WordWithSynonyms) {
             binding.tvWord.text = item.word.word
-            binding.tvDescription.text = item.meanings[0].definition
-
-            if (item.word.pronunciation != null) {
-                binding.btnPlay.enable()
-                binding.btnPlay.setOnClickListener {
-                    onAudioClickListener.onAudioClick(item.word.pronunciation)
-                }
-            }
+            binding.tvTranslation.text = item.word.translation
         }
     }
 

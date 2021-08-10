@@ -1,6 +1,7 @@
 package com.example.professionalhomework.utils
 
 import android.view.View
+import java.util.*
 
 object Extensions {
 
@@ -17,9 +18,10 @@ object Extensions {
         alpha = 1f
     }
 
-    fun View.disable() {
-        isEnabled = false
-        alpha = 0.5f
+    fun String.capitalize() = this.replaceFirstChar {
+        if (it.isLowerCase()) it.titlecase(
+            Locale.getDefault()
+        ) else it.toString()
     }
 
 }

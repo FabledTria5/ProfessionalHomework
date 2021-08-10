@@ -1,14 +1,18 @@
 package com.example.professionalhomework.data.db.entities
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "table_words")
+@Entity(tableName = "words_table")
 data class Word(
-    @PrimaryKey(autoGenerate = false)
-    @ColumnInfo(name = "word")
+    @PrimaryKey
+    @SerializedName("word")
     val word: String,
-    @ColumnInfo(name = "pronunciation")
-    val pronunciation: String?,
+    @SerializedName("translation")
+    val translation: String,
+    @SerializedName("image")
+    val image: String,
+    @SerializedName("sound")
+    val sound: String?
 )

@@ -3,9 +3,9 @@ package com.example.professionalhomework.data.network.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Phonetic(
-    @SerializedName("audio")
-    val audio: String,
+data class Translation(
+    @SerializedName("note")
+    val note: String,
     @SerializedName("text")
     val text: String
 )

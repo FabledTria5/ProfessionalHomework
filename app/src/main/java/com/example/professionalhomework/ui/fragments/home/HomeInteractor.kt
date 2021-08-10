@@ -1,32 +1,30 @@
 package com.example.professionalhomework.ui.fragments.home
 
 import com.example.professionalhomework.data.model.AppState
-import com.example.professionalhomework.data.repository.*
+import com.example.professionalhomework.data.repository.DataMapper
+import com.example.professionalhomework.data.repository.LocalRepository
+import com.example.professionalhomework.data.repository.RemoteRepository
 
 class HomeInteractor(
     private val remoteRepository: RemoteRepository,
     private val localRepository: LocalRepository,
 ) {
 
-    suspend fun getWord(word: String, languageCode: String): AppState {
+    suspend fun getWord(word: String): AppState {
         var data = localRepository.getWord(word = word)
-        if (data == null) {
-            return try {
-                val response = remoteRepository.getData(languageCode = languageCode, query = word)
-                data = localRepository.fetchWord(
-                    DataConverter.convertToWord(
-                        word,
-                        response[0].phonetics[0].audio
-                    ),
-                    DataConverter.convertToMeanings(word, response[0])
+        return if (data == null) {
+            try {
+                val response = remoteRepository.getData(query = word)
+                data =  localRepository.fetchWord(
+                    DataMapper.mapResponseToWord(response[0]),
+                    DataMapper.mapResponseToSynonyms(response)
                 )
                 AppState.Success(data)
             } catch (e: Exception) {
                 AppState.Error(e)
             }
         } else {
-            return AppState.Success(data)
+            AppState.Success(data)
         }
     }
-
 }

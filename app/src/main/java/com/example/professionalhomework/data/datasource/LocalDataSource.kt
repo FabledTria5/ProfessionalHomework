@@ -1,11 +1,11 @@
 package com.example.professionalhomework.data.datasource
 
-import com.example.professionalhomework.data.db.entities.Meaning
+import com.example.professionalhomework.data.db.WordWithSynonyms
+import com.example.professionalhomework.data.db.entities.Synonym
 import com.example.professionalhomework.data.db.entities.Word
-import com.example.professionalhomework.data.db.relations.WordWithMeanings
 
 interface LocalDataSource {
-    suspend fun getData(word: String): WordWithMeanings?
-    suspend fun fetchData(word: Word, meanings: List<Meaning>): WordWithMeanings
-    suspend fun getAllWords(): List<WordWithMeanings>
+    suspend fun getData(word: String): WordWithSynonyms?
+    suspend fun fetchData(word: Word, synonyms: List<Synonym>): WordWithSynonyms
+    suspend fun getAllWords(): List<WordWithSynonyms>
 }

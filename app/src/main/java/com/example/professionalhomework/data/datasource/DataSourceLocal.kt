@@ -1,10 +1,9 @@
 package com.example.professionalhomework.data.datasource
 
 import com.example.professionalhomework.data.db.DictionaryDatabase
-import com.example.professionalhomework.data.db.entities.Meaning
+import com.example.professionalhomework.data.db.WordWithSynonyms
+import com.example.professionalhomework.data.db.entities.Synonym
 import com.example.professionalhomework.data.db.entities.Word
-import com.example.professionalhomework.data.db.relations.WordWithMeanings
-import javax.inject.Inject
 
 class DataSourceLocal(
     db: DictionaryDatabase
@@ -12,14 +11,14 @@ class DataSourceLocal(
 
     private val wordsDao = db.wordsDao()
 
-    override suspend fun fetchData(word: Word, meanings: List<Meaning>): WordWithMeanings {
+    override suspend fun fetchData(word: Word, synonyms: List<Synonym>): WordWithSynonyms {
         wordsDao.insertWord(word = word)
-        wordsDao.insertMeanings(meanings = meanings)
-        return wordsDao.getWordWithMeanings(word = word.word)
+        wordsDao.insertSynonyms(synonyms = synonyms)
+        return wordsDao.getWordWithSynonyms(word = word.word)
     }
 
-    override suspend fun getAllWords(): List<WordWithMeanings> = wordsDao.getAllWords()
+    override suspend fun getAllWords(): List<WordWithSynonyms> = wordsDao.getAllWords()
 
-    override suspend fun getData(word: String) = wordsDao.getWordWithMeanings(word)
+    override suspend fun getData(word: String) = wordsDao.getWordWithSynonyms(word)
 
 }

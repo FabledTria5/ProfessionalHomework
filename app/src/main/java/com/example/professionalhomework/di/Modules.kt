@@ -8,7 +8,7 @@ import com.example.professionalhomework.data.datasource.DataSourceRemote
 import com.example.professionalhomework.data.datasource.LocalDataSource
 import com.example.professionalhomework.data.datasource.RemoteDataSource
 import com.example.professionalhomework.data.db.DictionaryDatabase
-import com.example.professionalhomework.data.network.api.ApiService
+import com.example.professionalhomework.data.network.api.DictionaryApi
 import com.example.professionalhomework.data.repository.LocalRepository
 import com.example.professionalhomework.data.repository.LocalRepositoryImpl
 import com.example.professionalhomework.data.repository.RemoteRepository
@@ -29,8 +29,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 val networkModule = module {
     single(named("BASE_URL")) { Constants.DICTIONARY_BASE_URL }
     factory { provideOkHttpClient() }
-    single { provideRetrofit(baseUrl = get(qualifier = named("BASE_URL")), okHttpClient = get()) }
-    factory { provideDictionaryApi(retrofit = get()) }
+    single(named("DictionaryRetrofit")) {
+        provideDictionaryRetrofit(
+            baseUrl = get(qualifier = named("BASE_URL")),
+            okHttpClient = get()
+        )
+    }
+    factory { provideDictionaryApi(retrofit = get(qualifier = named("DictionaryRetrofit"))) }
 }
 
 val localDataModule = module {
@@ -38,7 +43,7 @@ val localDataModule = module {
 }
 
 val domainModule = module {
-    single<RemoteDataSource> { DataSourceRemote(apiService = get()) }
+    single<RemoteDataSource> { DataSourceRemote(dictionaryApi = get()) }
     single<LocalDataSource> { DataSourceLocal(db = get()) }
 
     single<LocalRepository> {
@@ -78,10 +83,12 @@ fun provideOkHttpClient() = if (BuildConfig.DEBUG) {
     OkHttpClient.Builder().build()
 }
 
-fun provideDictionaryApi(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
+fun provideDictionaryApi(retrofit: Retrofit): DictionaryApi =
+    retrofit.create(DictionaryApi::class.java)
 
-fun provideRetrofit(baseUrl: String, okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-    .addConverterFactory(GsonConverterFactory.create())
-    .baseUrl(baseUrl)
-    .client(okHttpClient)
-    .build()
+fun provideDictionaryRetrofit(baseUrl: String, okHttpClient: OkHttpClient): Retrofit =
+    Retrofit.Builder()
+        .addConverterFactory(GsonConverterFactory.create())
+        .baseUrl(baseUrl)
+        .client(okHttpClient)
+        .build()

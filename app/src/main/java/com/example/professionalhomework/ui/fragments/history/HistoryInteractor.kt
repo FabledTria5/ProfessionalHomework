@@ -7,6 +7,10 @@ class HistoryInteractor(
     private val localRepository: LocalRepository,
 ) {
 
-    suspend fun getAllWords() = AppState.ListSuccess(localRepository.getAllWords())
+    suspend fun getAllWords() = try {
+        AppState.ListSuccess(localRepository.getAllWords())
+    } catch (e: Exception) {
+        AppState.Error(e)
+    }
 
 }

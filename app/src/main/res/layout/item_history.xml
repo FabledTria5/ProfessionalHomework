@@ -28,25 +28,8 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Android" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnPlay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:alpha="0.5"
-            android:backgroundTint="@color/DarkLateBlue"
-            android:contentDescription="@string/word_audio"
-            android:enabled="false"
-            android:src="@drawable/ic_play"
-            app:backgroundTint="@color/SteelBlue"
-            app:fabSize="mini"
-            app:layout_constraintBottom_toBottomOf="@+id/tvWord"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvWord"
-            app:tint="@color/white" />
-
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tvDescription"
+            android:id="@+id/tvTranslation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_10sdp"

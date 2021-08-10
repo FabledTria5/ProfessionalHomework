@@ -1,6 +1,5 @@
 package com.example.professionalhomework.ui.fragments.history
 
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,21 +16,7 @@ class HistoryFragment : BaseFragment<AppState>() {
     private var _binding: FragmentHistoryBinding? = null
     private val binding get() = _binding!!
 
-    private var mediaPlayer: MediaPlayer? = null
-
     private val viewModel: HistoryViewModel by viewModel()
-
-    private val onAudioClickListener = object : OnAudioClickListener {
-        override fun onAudioClick(audioUrl: String) {
-            mediaPlayer?.release()
-
-            mediaPlayer = MediaPlayer().apply {
-                setDataSource(audioUrl)
-                setOnPreparedListener { player -> player.start() }
-                prepareAsync()
-            }
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,7 +57,7 @@ class HistoryFragment : BaseFragment<AppState>() {
 
     private fun setResult(dataModel: AppState.ListSuccess) {
         binding.rvHistory.apply {
-            adapter = HistoryAdapter(dataModel.data, onAudioClickListener)
+            adapter = HistoryAdapter(dataModel.data)
             show()
         }
         hideLoading()

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -13,7 +13,7 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_250sdp"
+            android:layout_height="@dimen/_210sdp"
             android:contentDescription="@string/main_background"
             android:scaleX="3.5"
             android:scaleY="1.7"
@@ -26,54 +26,13 @@
             android:id="@+id/btnHistory"
             android:layout_width="@dimen/_25sdp"
             android:layout_height="@dimen/_25sdp"
-            android:src="@drawable/ic_history"
+            android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginEnd="@dimen/_10sdp"
-            app:layout_constraintBottom_toTopOf="@+id/tabLayout"
+            android:contentDescription="@string/history_icon"
+            android:src="@drawable/ic_history"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/imageView"
-            app:tint="@color/white"
-            android:contentDescription="@string/history_button" />
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:background="@color/DarkLateBlue"
-            app:layout_constraintBottom_toTopOf="@+id/tilSearchLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:tabIndicatorHeight="0dp"
-            app:tabSelectedTextColor="@color/white"
-            app:tabTextAppearance="@style/TabTextAppearance"
-            app:tabTextColor="@color/SteelBlue">
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/english" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/russian" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/german" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/french" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/italian" />
-
-        </com.google.android.material.tabs.TabLayout>
+            app:tint="@color/white" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilSearchLayout"
@@ -100,7 +59,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="@color/white"
-                android:textCursorDrawable="@drawable/custom_cursor" />
+                android:textCursorDrawable="@drawable/custom_cursor"
+                tools:ignore="SpeakableTextPresentCheck" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -113,24 +73,32 @@
             android:textSize="@dimen/_18ssp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            tools:text="Translation" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnPlay"
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvWordTranslation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:alpha="0.5"
-            android:backgroundTint="@color/DarkLateBlue"
-            android:contentDescription="@string/word_audio"
-            android:enabled="false"
-            android:src="@drawable/ic_play"
-            app:backgroundTint="@color/SteelBlue"
-            app:fabSize="normal"
-            app:layout_constraintBottom_toBottomOf="@+id/tvWord"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:textColor="@color/black"
+            android:textIsSelectable="true"
+            android:textSize="@dimen/_13ssp"
+            app:layout_constraintStart_toStartOf="@+id/tvWord"
+            app:layout_constraintTop_toBottomOf="@+id/tvWord"
+            tools:text="Перевод" />
+
+        <ImageView
+            android:id="@+id/ivWordImage"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_250sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:contentDescription="@string/word_image"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvWord"
-            app:tint="@color/white" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvWordTranslation" />
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/progressIndicator"
@@ -139,9 +107,10 @@
             android:indeterminate="true"
             android:visibility="invisible"
             app:indicatorColor="@color/DarkLateBlue"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/rvMeanings"
+            app:layout_constraintBottom_toBottomOf="@+id/ivWordImage"
+            app:layout_constraintEnd_toEndOf="@+id/ivWordImage"
+            app:layout_constraintStart_toStartOf="@+id/ivWordImage"
+            app:layout_constraintTop_toTopOf="@+id/tvWord"
             app:trackColor="@color/SteelBlue" />
 
         <TextView
@@ -152,13 +121,25 @@
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp"
             android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/progressIndicator"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/progressIndicator" />
+            app:layout_constraintBottom_toBottomOf="@+id/ivWordImage"
+            app:layout_constraintEnd_toEndOf="@+id/ivWordImage"
+            app:layout_constraintStart_toStartOf="@+id/ivWordImage"
+            app:layout_constraintTop_toTopOf="@+id/tvWord" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/materialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:text="@string/synonyms"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_18ssp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/tvWord"
+            app:layout_constraintTop_toBottomOf="@+id/ivWordImage" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvMeanings"
+            android:id="@+id/rvSynonyms"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_10sdp"
@@ -168,7 +149,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnPlay"
+            app:layout_constraintTop_toBottomOf="@+id/materialTextView"
             tools:listitem="@layout/item_meaning" />
 
         <androidx.constraintlayout.widget.Group
@@ -176,7 +157,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="invisible"
-            app:constraint_referenced_ids="rvMeanings,tvWord" />
+            app:constraint_referenced_ids="rvSynonyms,tvWord, ivWordImage, tvWordTranslation, materialTextView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
