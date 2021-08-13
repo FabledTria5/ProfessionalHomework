@@ -1,25 +1,23 @@
 package com.example.professionalhomework
 
 import android.app.Application
-import com.example.professionalhomework.di.component.AppComponent
-import com.example.professionalhomework.di.component.DaggerAppComponent
-import com.example.professionalhomework.rx.DefaultSchedulers
+import com.example.professionalhomework.di.module.localDataModule
+import com.example.professionalhomework.di.module.domainModule
+import com.example.professionalhomework.di.module.networkModule
+import com.example.professionalhomework.di.module.presentationModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 import timber.log.Timber
 
 class DictionaryApplication : Application() {
 
-    companion object {
-        lateinit var component: AppComponent
-    }
-
     override fun onCreate() {
         super.onCreate()
 
-        component = DaggerAppComponent
-            .builder()
-            .withContext(applicationContext)
-            .withSchedulers(DefaultSchedulers)
-            .build()
+        startKoin {
+            androidContext(this@DictionaryApplication)
+            modules(listOf(presentationModule, domainModule, localDataModule, networkModule))
+        }
 
         Timber.plant(Timber.DebugTree())
     }

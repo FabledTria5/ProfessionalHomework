@@ -4,21 +4,20 @@ import com.example.professionalhomework.data.db.DictionaryDatabase
 import com.example.professionalhomework.data.db.entities.Meaning
 import com.example.professionalhomework.data.db.entities.Word
 import com.example.professionalhomework.data.db.relations.WordWithMeanings
-import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
-class DataSourceLocal @Inject constructor(
+class DataSourceLocal(
     db: DictionaryDatabase
 ) : LocalDataSource {
 
     private val wordsDao = db.wordsDao()
 
-    override fun fetchData(word: Word, meanings: List<Meaning>): Single<WordWithMeanings> =
+    override suspend fun fetchData(word: Word, meanings: List<Meaning>): WordWithMeanings {
         wordsDao.insertWord(word = word)
-            .andThen(wordsDao.insertMeanings(meanings))
-            .andThen(wordsDao.getWordWithMeanings(word.word))
+        wordsDao.insertMeanings(meanings = meanings)
+        return wordsDao.getWordWithMeanings(word = word.word)
+    }
 
-    override fun getData(word: String): Single<WordWithMeanings> =
-        wordsDao.getWordWithMeanings(word)
+    override suspend fun getData(word: String) = wordsDao.getWordWithMeanings(word)
 
 }

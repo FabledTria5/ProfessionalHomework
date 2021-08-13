@@ -1,7 +1,7 @@
 package com.example.professionalhomework.ui.interactor
 
-import io.reactivex.rxjava3.core.Single
+import com.example.professionalhomework.data.model.AppState
 
 interface Interactor<T> {
-    fun getWord(word: String, languageCode: String): Single<out T>
+    suspend fun getWord(word: String, languageCode: String): AppState
 }
