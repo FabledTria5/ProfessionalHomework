@@ -16,4 +16,5 @@
     <string name="no_words_message">You do not have any words yet</string>
     <string name="synonyms">Synonyms:</string>
     <string name="word_image">Word Image</string>
+    <string name="title_dynamicfeature">Module Title</string>
 </resources>

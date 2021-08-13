@@ -36,9 +36,15 @@ android {
     kotlinOptions {
         jvmTarget = Config.jvmTarget
     }
+
+    dynamicFeatures = []
 }
 
 dependencies {
+
+    api project(':domain')
+    api project(':data:repository')
+
     implementation Kotlin.stdlib
     implementation Kotlin.core
     implementation Kotlin.viewModelKtx
@@ -56,17 +62,6 @@ dependencies {
     implementation Design.ssp
     implementation Design.lottie
     implementation Design.coil
-
-    // Room
-    implementation Room.roomRuntime
-    annotationProcessor Room.roomCompiler
-    kapt Room.roomCompiler
-    implementation Room.roomKtx
-
-    // Retrofit & Gson
-    implementation Retrofit.retrofit
-    implementation Retrofit.gson
-    implementation Retrofit.interceptor
 
     // Timber
     implementation Utils.timber
