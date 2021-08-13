@@ -11,4 +11,9 @@
     <string name="options_button">Options button</string>
     <string name="easy_words">Easy Words</string>
     <string name="error_message">Sorry, we could not find your word</string>
+    <string name="history">History</string>
+    <string name="history_icon">History Icon</string>
+    <string name="no_words_message">You do not have any words yet</string>
+    <string name="synonyms">Synonyms:</string>
+    <string name="word_image">Word Image</string>
 </resources>

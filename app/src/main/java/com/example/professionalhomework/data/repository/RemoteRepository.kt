@@ -1,7 +1,7 @@
-package com.example.professionalhomework.data.datasource
+package com.example.professionalhomework.data.repository
 
 import com.example.professionalhomework.data.network.model.DictionaryResponse
 
-interface RemoteDataSource {
+interface RemoteRepository {
     suspend fun getData(query: String): DictionaryResponse
 }
