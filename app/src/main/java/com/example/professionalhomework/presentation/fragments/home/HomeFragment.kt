@@ -2,48 +2,50 @@ package com.example.professionalhomework.presentation.fragments.home
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.professionalhomework.R
-import com.example.professionalhomework.presentation.entities.AppState
 import com.example.professionalhomework.databinding.FragmentHomeBinding
 import com.example.professionalhomework.presentation.adapters.rv.MeaningAdapter
 import com.example.professionalhomework.presentation.base.view.BaseFragment
+import com.example.professionalhomework.presentation.di.loadHomeModule
+import com.example.professionalhomework.presentation.entities.AppState
 import com.example.professionalhomework.utils.Extensions.capitalize
+import com.example.professionalhomework.utils.Extensions.extractText
 import com.example.professionalhomework.utils.Extensions.hide
 import com.example.professionalhomework.utils.Extensions.show
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeFragment : BaseFragment<AppState>() {
+class HomeFragment : BaseFragment<AppState>(R.layout.fragment_home) {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var meaningAdapter: MeaningAdapter
 
-    val viewModel: HomeViewModel by viewModel()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    private val viewModel: HomeViewModel by viewModel()
+    private fun injectFeatures() = loadHomeModule
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initialize()
+        super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentHomeBinding.bind(view)
+
+        injectFeatures()
+
+        setupUi()
         setupListeners()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
+    override fun setupUi() {
+        viewModel.subscribe().observe(viewLifecycleOwner, ::renderData)
+
+        binding.rvSynonyms.apply {
+            meaningAdapter = MeaningAdapter()
+            adapter = meaningAdapter
+        }
     }
 
     override fun renderData(dataModel: AppState) {
@@ -72,27 +74,31 @@ class HomeFragment : BaseFragment<AppState>() {
         binding.groupResult.show()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
     private fun hideKeyboard() =
         (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).also {
             it.hideSoftInputFromWindow(view?.windowToken, 0)
         }
 
-    private fun initialize() {
-        viewModel.subscribe().observe(viewLifecycleOwner, ::renderData)
-
-        binding.rvSynonyms.apply {
-            meaningAdapter = MeaningAdapter()
-            adapter = meaningAdapter
-        }
-    }
-
     private fun setupListeners() {
         binding.tilSearchLayout.setEndIconOnClickListener {
-            viewModel.getData(binding.tieSearchView.text.toString().trim())
+            viewModel.getData(binding.tieSearchView.extractText())
         }
 
         binding.btnHistory.setOnClickListener {
-            requireView().findNavController().navigate(R.id.openHostoryFragment)
+            findNavController().navigate(R.id.openHistoryFragment)
+        }
+
+        binding.tieSearchView.setOnEditorActionListener { view, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                viewModel.getData(view.extractText())
+                return@setOnEditorActionListener true
+            }
+            return@setOnEditorActionListener false
         }
     }
 

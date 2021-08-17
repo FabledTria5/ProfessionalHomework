@@ -37,7 +37,7 @@ android {
         jvmTarget = Config.jvmTarget
     }
 
-    dynamicFeatures = []
+    dynamicFeatures = [':historyFeature']
 }
 
 dependencies {
@@ -55,22 +55,23 @@ dependencies {
     androidTestImplementation Testing.espressoCore
 
     //Design
-    implementation Design.material
-    implementation Design.appcompat
-    implementation Design.constraint
-    implementation Design.sdp
-    implementation Design.ssp
+    api Design.material
+    api Design.appcompat
+    api Design.constraint
+    api Design.sdp
+    api Design.ssp
     implementation Design.lottie
-    implementation Design.coil
+    api Design.coil
 
     // Timber
-    implementation Utils.timber
+    api Utils.timber
 
     // Koin
-    implementation Koin.koinCore
-    implementation Koin.koinAndroid
+    api Koin.koinCore
+    api Koin.koinAndroid
 
     // Navigation
-    implementation Navigation.navigationFragment
-    implementation Navigation.navigationUi
+    api Navigation.navigationFragment
+    api Navigation.navigationUi
+    api Navigation.navigationDynamicFeature
 }

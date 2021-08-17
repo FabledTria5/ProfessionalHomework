@@ -45,7 +45,7 @@ object Versions {
     const val runtime = "2.3.0"
 
     // Logging
-    const val timber = "4.7.1"
+    const val timber = "5.0.0"
 
     // Koin
     const val koinCore = "3.1.2"
@@ -103,6 +103,8 @@ object Navigation {
         "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
     const val safeArgs =
         "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
+    const val navigationDynamicFeature =
+        "androidx.navigation:navigation-dynamic-features-fragment:${Versions.navigation}"
 }
 
 object Testing {

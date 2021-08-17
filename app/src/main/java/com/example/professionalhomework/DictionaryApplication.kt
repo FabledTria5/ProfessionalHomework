@@ -3,8 +3,6 @@ package com.example.professionalhomework
 import android.app.Application
 import com.db.di.dbModule
 import com.example.network.di.networkModule
-import com.example.professionalhomework.presentation.di.mainModule
-import com.example.professionalhomework.presentation.di.useCaseModule
 import com.example.repository.di.repositoryModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -23,7 +21,7 @@ class DictionaryApplication : Application() {
     private fun initKoin() {
         startKoin {
             val modules =
-                listOf(networkModule, dbModule, repositoryModule, useCaseModule, mainModule)
+                listOf(networkModule, dbModule, repositoryModule)
             androidLogger(Level.NONE)
             androidContext(this@DictionaryApplication)
             modules(modules)

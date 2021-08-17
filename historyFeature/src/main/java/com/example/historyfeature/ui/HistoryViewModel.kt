@@ -1,4 +1,4 @@
-package com.example.professionalhomework.presentation.fragments.history
+package com.example.historyfeature.ui
 
 import androidx.lifecycle.viewModelScope
 import com.example.domain.usecasase.LoadHistoryUseCase
