@@ -6,7 +6,6 @@ android {
     compileSdk Config.compile_sdk
 
     defaultConfig {
-        applicationId "com.example.historyfeature"
         minSdk Config.min_sdk
         targetSdk Config.target_sdk
 

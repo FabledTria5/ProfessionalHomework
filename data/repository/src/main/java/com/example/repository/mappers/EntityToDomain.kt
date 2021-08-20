@@ -18,7 +18,7 @@ internal fun List<WordWithSynonyms>.toDomain() = this.map {
 }
 
 internal fun WordWithSynonyms.toDomain() = WordItem(
-    word = this.word.word,
-    translation = this.word.translation,
-    imagePath = this.word.image,
-    synonyms = this.synonyms.map { Pair(it.childWord, it.childTranslation) })
+    word = word.word,
+    translation = word.translation,
+    imagePath = "https:${word.image}",
+    synonyms = synonyms.map { Pair(it.childWord, it.childTranslation) })

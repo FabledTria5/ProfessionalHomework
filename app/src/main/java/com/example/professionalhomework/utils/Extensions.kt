@@ -3,6 +3,8 @@ package com.example.professionalhomework.utils
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.install.model.UpdateAvailability
 import java.util.*
@@ -30,4 +32,7 @@ object Extensions {
     fun AppUpdateInfo.updateAvailable(): Boolean {
         return updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
     }
+
+    inline fun <reified T : ViewBinding> Fragment.viewBinding() =
+        FragmentViewBindingDelegate(T::class.java, this)
 }

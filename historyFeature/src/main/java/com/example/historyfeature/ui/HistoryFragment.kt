@@ -4,27 +4,28 @@ import android.os.Bundle
 import android.view.View
 import com.example.historyfeature.R
 import com.example.historyfeature.databinding.FragmentHistoryBinding
+import com.example.historyfeature.di.injectDependencies
 import com.example.historyfeature.di.loadHistoryModule
 import com.example.professionalhomework.presentation.adapters.rv.HistoryAdapter
 import com.example.professionalhomework.presentation.base.view.BaseFragment
 import com.example.professionalhomework.presentation.entities.AppState
 import com.example.professionalhomework.utils.Extensions.show
+import com.example.professionalhomework.utils.Extensions.viewBinding
+import org.koin.android.scope.AndroidScopeComponent
+import org.koin.android.scope.createScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.scope.Scope
 
-class HistoryFragment : BaseFragment<AppState>(R.layout.fragment_history) {
+class HistoryFragment : BaseFragment<AppState>(R.layout.fragment_history), AndroidScopeComponent {
 
-    private var _binding: FragmentHistoryBinding? = null
-    private val binding get() = _binding!!
+    override val scope: Scope by lazy { createScope(this) }
 
+    private val binding: FragmentHistoryBinding by viewBinding()
     private val viewModel: HistoryViewModel by viewModel()
-    private fun injectFeatures() = loadHistoryModule
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentHistoryBinding.bind(view)
-
-        injectFeatures()
-
+        injectDependencies()
         setupUi()
     }
 
@@ -49,11 +50,6 @@ class HistoryFragment : BaseFragment<AppState>(R.layout.fragment_history) {
     override fun showError() {
         binding.tvErrorMessage.show()
         hideLoading()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 
     private fun setResult(dataModel: AppState.LoadHistorySuccess) {
