@@ -15,10 +15,16 @@ class HomeViewModel(
         liveDataForViewToObserve.value = AppState.Loading(null)
 
         viewModelScope.launch(Dispatchers.IO) {
-            searchWordUseCase.invoke(word = word)?.let {
-                liveDataForViewToObserve.postValue(AppState.SearchWordSuccess(data = it))
+            try {
+                searchWordUseCase.invoke(word = word)?.let {
+                    liveDataForViewToObserve.postValue(AppState.SearchWordSuccess(data = it))
+                }
+                    ?: liveDataForViewToObserve.postValue(
+                        AppState.Error(error = RuntimeException("Empty result"))
+                    )
+            } catch (e: Exception) {
+                liveDataForViewToObserve.postValue(AppState.Error(error = e))
             }
-                ?: liveDataForViewToObserve.postValue(AppState.Error(RuntimeException("Empty result")))
         }
     }
 
