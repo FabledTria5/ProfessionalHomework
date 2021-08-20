@@ -22,25 +22,15 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var appUpdateManager: AppUpdateManager
-    private lateinit var connectivityLiveData: ConnectivityLiveData
 
     private val stateUpdateListener = InstallStateUpdatedListener { state ->
         if (state.installStatus() == InstallStatus.DOWNLOADED) popupSnackBarForCompleteUpdate()
-    }
-
-    private val connectionSnackBar by lazy {
-        Snackbar.make(
-            binding.root,
-            "No internet connection",
-            Snackbar.LENGTH_INDEFINITE
-        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater).also { setContentView(it.root) }
         checkForUpdates()
-        setupConnectionListener()
     }
 
     override fun onSupportNavigateUp() = findNavController(R.id.navHostFragment).navigateUp()
@@ -58,16 +48,6 @@ class MainActivity : AppCompatActivity() {
                     this,
                     REQUEST_CODE
                 )
-            }
-        }
-    }
-
-    private fun setupConnectionListener() {
-        connectivityLiveData = ConnectivityLiveData(application = application)
-        connectivityLiveData.observe(this) { isAvailable ->
-            when (isAvailable) {
-                true -> connectionSnackBar.dismiss()
-                false -> connectionSnackBar.show()
             }
         }
     }

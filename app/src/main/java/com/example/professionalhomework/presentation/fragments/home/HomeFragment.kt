@@ -13,11 +13,13 @@ import com.example.professionalhomework.presentation.adapters.rv.MeaningAdapter
 import com.example.professionalhomework.presentation.base.view.BaseFragment
 import com.example.professionalhomework.presentation.di.injectDependencies
 import com.example.professionalhomework.presentation.entities.AppState
+import com.example.professionalhomework.utils.ConnectivityLiveData
 import com.example.professionalhomework.utils.Extensions.capitalize
 import com.example.professionalhomework.utils.Extensions.extractText
 import com.example.professionalhomework.utils.Extensions.hide
 import com.example.professionalhomework.utils.Extensions.show
 import com.example.professionalhomework.utils.Extensions.viewBinding
+import com.google.android.material.snackbar.Snackbar
 import org.koin.android.scope.AndroidScopeComponent
 import org.koin.androidx.scope.createScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -32,6 +34,14 @@ class HomeFragment : BaseFragment<AppState>(R.layout.fragment_home), AndroidScop
     private val viewModel: HomeViewModel by viewModel()
     private val binding: FragmentHomeBinding by viewBinding()
 
+    private val connectionSnackBar by lazy {
+        Snackbar.make(
+            binding.root,
+            "No internet connection",
+            Snackbar.LENGTH_INDEFINITE
+        )
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         injectDependencies()
@@ -45,6 +55,15 @@ class HomeFragment : BaseFragment<AppState>(R.layout.fragment_home), AndroidScop
         binding.rvSynonyms.apply {
             meaningAdapter = MeaningAdapter()
             adapter = meaningAdapter
+        }
+
+        ConnectivityLiveData(
+            application = requireActivity().application
+        ).observe(viewLifecycleOwner) { isAvailable ->
+            when (isAvailable) {
+                true -> connectionSnackBar.dismiss()
+                false -> connectionSnackBar.show()
+            }
         }
     }
 
