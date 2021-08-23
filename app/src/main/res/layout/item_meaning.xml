@@ -13,7 +13,7 @@
         android:textAllCaps="true"
         android:alpha="0.5"
         tools:text="ocean sunfish"
-        android:textColor="@color/black"
+        android:textColor="@color/colorText"
         android:textSize="@dimen/_13ssp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5sdp"
         android:paddingHorizontal="@dimen/_15sdp"
-        android:textColor="@color/black"
+        android:textColor="@color/colorText"
         android:textIsSelectable="true"
         tools:text="американский морской чёрт"
         android:textSize="@dimen/_13ssp"

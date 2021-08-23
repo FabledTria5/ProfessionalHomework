@@ -18,4 +18,7 @@
     <string name="word_image">Word Image</string>
     <string name="title_dynamicfeature">Module Title</string>
     <string name="title_historyfeature">History</string>
+    <string name="switch_theme">Switch Theme</string>
+    <string name="options">Options</string>
+    <string name="no_connection">No internet connection</string>
 </resources>

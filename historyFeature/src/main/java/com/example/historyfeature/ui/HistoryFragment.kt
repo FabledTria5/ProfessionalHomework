@@ -5,8 +5,7 @@ import android.view.View
 import com.example.historyfeature.R
 import com.example.historyfeature.databinding.FragmentHistoryBinding
 import com.example.historyfeature.di.injectDependencies
-import com.example.historyfeature.di.loadHistoryModule
-import com.example.professionalhomework.presentation.adapters.rv.HistoryAdapter
+import com.example.historyfeature.ui.adapters.HistoryAdapter
 import com.example.professionalhomework.presentation.base.view.BaseFragment
 import com.example.professionalhomework.presentation.entities.AppState
 import com.example.professionalhomework.utils.Extensions.show

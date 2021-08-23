@@ -12,6 +12,6 @@
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#FFFFFFFF</color>
     <color name="SteelBlue">#6186b4</color>
     <color name="rippleColor">#2D71CA</color>
-    <color name="colorText">#FF000000</color>
-    <color name="fragmentBackground">#FFFFFFFF</color>
+    <color name="colorText">#FFFFFFFF</color>
+    <color name="fragmentBackground">#FF000000</color>
 </resources>
