@@ -1,40 +1,36 @@
-package com.example.professionalhomework.presentation.fragments.history
+package com.example.historyfeature.ui
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import com.example.professionalhomework.presentation.entities.AppState
-import com.example.professionalhomework.databinding.FragmentHistoryBinding
+import com.example.historyfeature.R
+import com.example.historyfeature.databinding.FragmentHistoryBinding
+import com.example.historyfeature.di.loadHistoryModule
 import com.example.professionalhomework.presentation.adapters.rv.HistoryAdapter
 import com.example.professionalhomework.presentation.base.view.BaseFragment
+import com.example.professionalhomework.presentation.entities.AppState
 import com.example.professionalhomework.utils.Extensions.show
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HistoryFragment : BaseFragment<AppState>() {
+class HistoryFragment : BaseFragment<AppState>(R.layout.fragment_history) {
 
     private var _binding: FragmentHistoryBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: HistoryViewModel by viewModel()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentHistoryBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    private fun injectFeatures() = loadHistoryModule
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.subscribe().observe(viewLifecycleOwner, ::renderData)
-        viewModel.getData()
+        super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentHistoryBinding.bind(view)
+
+        injectFeatures()
+
+        setupUi()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
+    override fun setupUi() {
+        viewModel.subscribe().observe(viewLifecycleOwner, ::renderData)
+        viewModel.getData()
     }
 
     override fun renderData(dataModel: AppState) {
@@ -53,6 +49,11 @@ class HistoryFragment : BaseFragment<AppState>() {
     override fun showError() {
         binding.tvErrorMessage.show()
         hideLoading()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     private fun setResult(dataModel: AppState.LoadHistorySuccess) {

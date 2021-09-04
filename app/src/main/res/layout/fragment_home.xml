@@ -58,6 +58,8 @@
                 android:id="@+id/tieSearchView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
                 android:textColor="@color/white"
                 android:textCursorDrawable="@drawable/custom_cursor"
                 tools:ignore="SpeakableTextPresentCheck" />
@@ -92,8 +94,8 @@
             android:id="@+id/ivWordImage"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_250sdp"
-            android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:contentDescription="@string/word_image"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"

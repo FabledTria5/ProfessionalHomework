@@ -1,0 +1,43 @@
+plugins {
+    id 'com.android.dynamic-feature'
+    id 'kotlin-android'
+}
+android {
+    compileSdk Config.compile_sdk
+
+    defaultConfig {
+        applicationId "com.example.historyfeature"
+        minSdk Config.min_sdk
+        targetSdk Config.target_sdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    buildTypes {
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation project(":app")
+    implementation project(":domain")
+
+    // Kotlin
+    implementation Kotlin.stdlib
+    implementation Kotlin.core
+    implementation Kotlin.viewModelKtx
+    implementation Kotlin.coroutines
+
+    // Testing
+    testImplementation Testing.junit
+    androidTestImplementation Testing.extJunit
+    androidTestImplementation Testing.espressoCore
+
+    androidTestImplementation 'androidx.annotation:annotation:1.2.0'
+}
