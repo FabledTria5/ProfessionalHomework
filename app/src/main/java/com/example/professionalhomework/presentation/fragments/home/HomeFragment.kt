@@ -11,30 +11,40 @@ import com.example.professionalhomework.R
 import com.example.professionalhomework.databinding.FragmentHomeBinding
 import com.example.professionalhomework.presentation.adapters.rv.MeaningAdapter
 import com.example.professionalhomework.presentation.base.view.BaseFragment
-import com.example.professionalhomework.presentation.di.loadHomeModule
+import com.example.professionalhomework.presentation.di.injectDependencies
 import com.example.professionalhomework.presentation.entities.AppState
+import com.example.professionalhomework.utils.ConnectivityLiveData
 import com.example.professionalhomework.utils.Extensions.capitalize
 import com.example.professionalhomework.utils.Extensions.extractText
 import com.example.professionalhomework.utils.Extensions.hide
 import com.example.professionalhomework.utils.Extensions.show
+import com.example.professionalhomework.utils.Extensions.viewBinding
+import com.google.android.material.snackbar.Snackbar
+import org.koin.android.scope.AndroidScopeComponent
+import org.koin.androidx.scope.createScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.scope.Scope
 
-class HomeFragment : BaseFragment<AppState>(R.layout.fragment_home) {
+class HomeFragment : BaseFragment<AppState>(R.layout.fragment_home), AndroidScopeComponent {
 
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
+    override val scope: Scope by lazy { createScope(this) }
 
     private lateinit var meaningAdapter: MeaningAdapter
 
     private val viewModel: HomeViewModel by viewModel()
-    private fun injectFeatures() = loadHomeModule
+    private val binding: FragmentHomeBinding by viewBinding()
+
+    private val connectionSnackBar by lazy {
+        Snackbar.make(
+            binding.root,
+            "No internet connection",
+            Snackbar.LENGTH_INDEFINITE
+        )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentHomeBinding.bind(view)
-
-        injectFeatures()
-
+        injectDependencies()
         setupUi()
         setupListeners()
     }
@@ -45,6 +55,15 @@ class HomeFragment : BaseFragment<AppState>(R.layout.fragment_home) {
         binding.rvSynonyms.apply {
             meaningAdapter = MeaningAdapter()
             adapter = meaningAdapter
+        }
+
+        ConnectivityLiveData(
+            application = requireActivity().application
+        ).observe(viewLifecycleOwner) { isAvailable ->
+            when (isAvailable) {
+                true -> connectionSnackBar.dismiss()
+                false -> connectionSnackBar.show()
+            }
         }
     }
 
@@ -74,11 +93,6 @@ class HomeFragment : BaseFragment<AppState>(R.layout.fragment_home) {
         binding.groupResult.show()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
-
     private fun hideKeyboard() =
         (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).also {
             it.hideSoftInputFromWindow(view?.windowToken, 0)
@@ -106,7 +120,7 @@ class HomeFragment : BaseFragment<AppState>(R.layout.fragment_home) {
         binding.tvWord.text = dataModel.data.word.capitalize()
         binding.tvWordTranslation.text = dataModel.data.translation
         meaningAdapter.updateList(dataModel.data.synonyms)
-        binding.ivWordImage.load("https:${dataModel.data.imagePath}") {
+        binding.ivWordImage.load(dataModel.data.imagePath) {
             placeholder(R.drawable.placeholder)
         }
         hideLoading()
