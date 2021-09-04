@@ -1,11 +1,11 @@
-package com.example.professionalhomework.presentation.adapters.rv
+package com.example.historyfeature.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.models.WordItem
-import com.example.professionalhomework.R
-import com.example.professionalhomework.databinding.ItemHistoryBinding
+import com.example.historyfeature.R
+import com.example.historyfeature.databinding.ItemHistoryBinding
 
 class HistoryAdapter(
     private val items: List<WordItem>,

@@ -1,10 +1,20 @@
 package com.example.professionalhomework.presentation.fragments.home
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.professionalhomework.R
@@ -37,7 +47,7 @@ class HomeFragment : BaseFragment<AppState>(R.layout.fragment_home), AndroidScop
     private val connectionSnackBar by lazy {
         Snackbar.make(
             binding.root,
-            "No internet connection",
+            getString(R.string.no_connection),
             Snackbar.LENGTH_INDEFINITE
         )
     }
@@ -49,7 +59,29 @@ class HomeFragment : BaseFragment<AppState>(R.layout.fragment_home), AndroidScop
         setupListeners()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.home_screen_menu, menu)
+        menu.findItem(R.id.options)?.isVisible = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    @SuppressLint("InlinedApi")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.history -> findNavController().navigate(R.id.openHistoryFragment)
+            R.id.options -> startActivityForResult(Intent(Settings.Panel.ACTION_WIFI), 42)
+            R.id.switchNightMode -> switchTheme()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun setupUi() {
+        (requireActivity() as AppCompatActivity).apply {
+            setSupportActionBar(binding.homeToolBar)
+            supportActionBar?.setDisplayShowTitleEnabled(false)
+        }
+        setHasOptionsMenu(true)
+
         viewModel.subscribe().observe(viewLifecycleOwner, ::renderData)
 
         binding.rvSynonyms.apply {
@@ -103,10 +135,6 @@ class HomeFragment : BaseFragment<AppState>(R.layout.fragment_home), AndroidScop
             viewModel.getData(binding.tieSearchView.extractText())
         }
 
-        binding.btnHistory.setOnClickListener {
-            findNavController().navigate(R.id.openHistoryFragment)
-        }
-
         binding.tieSearchView.setOnEditorActionListener { view, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 viewModel.getData(view.extractText())
@@ -124,5 +152,16 @@ class HomeFragment : BaseFragment<AppState>(R.layout.fragment_home), AndroidScop
             placeholder(R.drawable.placeholder)
         }
         hideLoading()
+    }
+
+    private fun switchTheme() {
+        when (Configuration.UI_MODE_NIGHT_MASK and resources.configuration.uiMode) {
+            Configuration.UI_MODE_NIGHT_NO -> AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_YES
+            )
+            Configuration.UI_MODE_NIGHT_YES -> AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_NO
+            )
+        }
     }
 }
