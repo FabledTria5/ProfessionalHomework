@@ -1,0 +1,18 @@
+plugins {
+    id 'java-library'
+    id 'kotlin'
+}
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = Config.java_version
+    targetCompatibility = Config.java_version
+}
+
+dependencies {
+    implementation Kotlin.stdlib
+    implementation Kotlin.coroutines
+}

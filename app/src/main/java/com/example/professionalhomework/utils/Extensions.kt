@@ -13,15 +13,9 @@ object Extensions {
         visibility = View.INVISIBLE
     }
 
-    fun View.enable() {
-        isEnabled = true
-        alpha = 1f
-    }
-
     fun String.capitalize() = this.replaceFirstChar {
         if (it.isLowerCase()) it.titlecase(
             Locale.getDefault()
         ) else it.toString()
     }
-
 }

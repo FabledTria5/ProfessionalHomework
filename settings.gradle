@@ -1,2 +1,8 @@
 rootProject.name = "ProfessionalHomework"
 include ':app'
+include ':domain'
+include ':domain'
+include ':data'
+include ':data:db'
+include ':data:network'
+include ':data:repository'
